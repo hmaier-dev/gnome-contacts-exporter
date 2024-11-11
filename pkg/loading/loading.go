@@ -18,10 +18,13 @@ func LoadSqlite(source string){
     }
     // rows, err := db.Query("Select name from sqlite_master WHERE type='table';")
     rows, err := db.Query("Select * from folder_id_phone_list;")
+    if err != nil{
+        log.Fatalf("%#v\n", err)
+    } 
     cols, err := rows.Columns()
 
     if err != nil{
-        fmt.Println(err)
+        log.Fatalf("%#v\n", err)
     } 
 
 	rawResult := make([][]byte, len(cols)) // [row][values] -> e.g. row: [[value][value][value]]
