@@ -2,13 +2,33 @@ package loading
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	"fmt"
 	"log"
-	_ "github.com/mattn/go-sqlite3"
+    "os"
+    "io"
+    "github.com/hmaier-dev/go-vcard"
+
 )
 
-func LoadVFC(source string){
-
+// LoadVFC opens a vcf-file from the given path and stores it in 
+func LoadVFC(source string) vcard.Card {
+    f, err := os.Open(source)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer f.Close()
+    var card vcard.Card
+    dec := vcard.NewDecoder(f)
+    for {
+        card, err = dec.Decode()
+        if err == io.EOF {
+            break
+        } else if err != nil {
+            log.Fatal(err)
+        }
+    }
+    return card
 }
 
 func LoadSqlite(source string){
@@ -26,7 +46,6 @@ func LoadSqlite(source string){
     if err != nil{
         log.Fatalf("%#v\n", err)
     } 
-
 	rawResult := make([][]byte, len(cols)) // [row][values] -> e.g. row: [[value][value][value]]
 	dest := make([]interface{}, len(cols)) // .Scan() needs []any as result type
 	allRows := make([][]string, 0)
@@ -49,3 +68,5 @@ func LoadSqlite(source string){
     fmt.Printf("%v\n", allRows)
 
 }
+
+
