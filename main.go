@@ -7,4 +7,7 @@ import (
 
 func main(){
 
+    p := "testdata/contacts.vcf"
+    loading.LoadVFC(p)
+
 }
