@@ -1,13 +1,20 @@
 package main
 
-
 import (
-    "github.com/hmaier-dev/contacts_converter/pkg/loading"
+	"fmt"
+
+	"github.com/hmaier-dev/contacts_converter/pkg/loading"
+	"github.com/hmaier-dev/go-vcard"
 )
 
 func main(){
 
     p := "testdata/contacts.vcf"
-    loading.LoadVFC(p)
+    c := loading.LoadVFC(p)
+    for _, vc := range c{
+        fmt.Println(vc.AllValues(vcard.FieldFormattedName))
+        fmt.Println(vc.AllValues(vcard.FieldAddress))
+        fmt.Println(vc.AllValues(vcard.FieldEmail))
+    }
 
 }
