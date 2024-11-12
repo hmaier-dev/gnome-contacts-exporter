@@ -11,24 +11,25 @@ import (
 
 )
 
-// LoadVFC opens a vcf-file from the given path and stores it in 
-func LoadVFC(source string) vcard.Card {
+// LoadVFC opens a vcf-file from the given path and stores it in a Card.
+func LoadVFC(source string) []vcard.Card {
     f, err := os.Open(source)
     if err != nil {
         log.Fatal(err)
     }
     defer f.Close()
-    var card vcard.Card
+    var out []vcard.Card 
     dec := vcard.NewDecoder(f)
     for {
-        card, err = dec.Decode()
+        card, err := dec.Decode()
         if err == io.EOF {
             break
         } else if err != nil {
             log.Fatal(err)
         }
+        out = append(out, card)
     }
-    return card
+    return out
 }
 
 func LoadSqlite(source string){
