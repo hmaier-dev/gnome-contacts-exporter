@@ -15,5 +15,8 @@ func main(){
         fmt.Println(vc.AllValues(vcard.FieldAddress))
         fmt.Println(vc.AllValues(vcard.FieldEmail))
     }
+    // buf := writer.(*bytes.Buffer)
+    // data := buf.Bytes()
+    // os.WriteFile("../testdata/contacts2.vcf", data, 0744)
 
 }

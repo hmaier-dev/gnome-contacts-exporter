@@ -66,7 +66,7 @@ func LoadSqlite(source string){
 		allRows = append(allRows, singleRow)
 	}
     
-    fmt.Printf("%v\n", allRows)
+    // fmt.Printf("%v\n", allRows)
 
 }
 
@@ -75,6 +75,7 @@ func WriteVCF(cards []vcard.Card, w io.Writer){
     enc := vcard.NewEncoder(w)
     for _, c := range cards{
         enc.Encode(c)
+        w.Write([]byte("\n"))
     }
 
 }
