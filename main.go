@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/hmaier-dev/contacts_converter/pkg/loading"
 	"github.com/hmaier-dev/go-vcard"
 )

@@ -70,4 +70,13 @@ func LoadSqlite(source string){
 
 }
 
+func WriteVCF(cards []vcard.Card, w io.Writer){
+   
+    enc := vcard.NewEncoder(w)
+    for _, c := range cards{
+        enc.Encode(c)
+    }
+
+}
+
 
