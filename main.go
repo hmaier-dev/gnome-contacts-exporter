@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/hmaier-dev/contacts_converter/pkg/loading"
+	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/loading"
+	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/arguments"
 	"github.com/hmaier-dev/go-vcard"
 )
 
