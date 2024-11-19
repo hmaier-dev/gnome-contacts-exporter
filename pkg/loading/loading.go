@@ -11,6 +11,12 @@ import (
 
 )
 
+
+func Export(){
+    source := "testdata/contacts.db"
+    LoadSqlite(source)
+}
+
 // LoadVFC opens a vcf-file from the given path and stores it in a Card.
 func LoadVFC(source string) []vcard.Card {
     f, err := os.Open(source)
@@ -32,13 +38,32 @@ func LoadVFC(source string) []vcard.Card {
     return out
 }
 
+type Folder_ID struct {
+	UID                  string 
+	Rev                  string 
+	FileAs               string 
+	FileAsLocalized      string 
+	Nickname             string 
+	FullName             string 
+	GivenName            string 
+	GivenNameLocalized   string 
+	FamilyName           string 
+	FamilyNameLocalized  string 
+	IsList               int    
+	ListShowAddresses    int    
+	WantsHTML            int    
+	X509Cert             int    
+	PgpCert              int    
+	VCard                string 
+	BData                string 
+}
+
 func LoadSqlite(source string){
     db, err := sql.Open("sqlite3", source)
     if err != nil{
         fmt.Println(err)
     }
-    // rows, err := db.Query("Select name from sqlite_master WHERE type='table';")
-    rows, err := db.Query("Select * from folder_id_phone_list;")
+    rows, err := db.Query("Select * from folder_id WHERE vcard != NULL;")
     if err != nil{
         log.Fatalf("%#v\n", err)
     } 
@@ -66,8 +91,7 @@ func LoadSqlite(source string){
 		allRows = append(allRows, singleRow)
 	}
     
-    // fmt.Printf("%v\n", allRows)
-
+    fmt.Printf("%v\n", allRows)
 }
 
 func WriteVCF(cards []vcard.Card, w io.Writer){
