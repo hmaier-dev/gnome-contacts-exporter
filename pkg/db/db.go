@@ -57,18 +57,37 @@ type folders struct {
 }
 
 type keys struct {
-    key string
-    value string
-    folder_id string
+	key       string
+	value     string
+	folder_id string
 }
 
-
-func LoadSqlite(source string) {
+func init() {
+	source := testdb
 	db, err = sql.Open("sqlite3", source)
 	if err != nil {
 		log.Fatalf("%s when loading %s", err, source)
 	}
-	rows := querySqlite("select vcard from folder_id;")
+}
+
+// Export exports all vCards from the database
+func Export() {
+
+	rows := queryCommand("select vcard from folder_id;")
+    recv := []folder_id{}
+	for rows.Next() {
+		var row folder_id
+		err := rows.Scan(&row.vcard)
+		if err != nil {
+			log.Fatal("problems scanning the database", err)
+		}
+        recv = append(recv, row)
+	}
+
+}
+
+func LoadSqlite(source string) {
+	rows := queryCommand("select vcard from folder_id;")
 	cols, err := rows.Columns()
 
 	if err != nil {
@@ -96,7 +115,7 @@ func LoadSqlite(source string) {
 	fmt.Printf("%v\n", allRows)
 }
 
-func querySqlite(q string) *sql.Rows {
+func queryCommand(q string) *sql.Rows {
 	rows, err := db.Query(q)
 	if err != nil {
 		log.Fatalf("%#v\n", err)
