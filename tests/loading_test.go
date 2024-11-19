@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 	"testing"
-	"github.com/hmaier-dev/contacts_converter/pkg/loading"
+	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/loading"
 )
 
 

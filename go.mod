@@ -1,4 +1,4 @@
-module github.com/hmaier-dev/contacts_converter
+module github.com/hmaier-dev/gnome-contacts-exporter
 
 go 1.23.2
 
