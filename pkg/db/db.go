@@ -2,9 +2,7 @@ package db
 
 import (
 	"database/sql"
-	"errors"
 	"log"
-
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -61,8 +59,8 @@ type keys struct {
 
 var testdb string = "testdata/contacts.db"
 
-var source string
-var destination string
+var Source string
+var Destination string
 var db *sql.DB
 var err error
 
@@ -74,23 +72,15 @@ func init() {
 	}
 }
 
-func SetSource(s string) error {
-    if s == "" {
-        return errors.New("Empty source")
-    }
-    source = s
-    return nil
-}
-func SetDestionation(s string) error {
-    if s == "" {
-        return errors.New("Empty destination")
-    }
-    destination =  s
-    return nil
-}
-
 // Export exports all vCards from the database
 func Export() {
+    if Source == ""{
+        panic("Source is not defined.")
+    }
+    if Destination == ""{
+        panic("Destination is not defined.")
+    }
+
 	rows := queryCommand("select vcard from folder_id;")
     recv := []folder_id{}
 	for rows.Next() {
