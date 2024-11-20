@@ -59,8 +59,6 @@ type keys struct {
 
 var testdb string = "testdata/contacts.db"
 
-var Source string
-var Destination string
 var db *sql.DB
 var err error
 
@@ -73,11 +71,11 @@ func init() {
 }
 
 // Export exports all vCards from the database
-func Export() {
-    if Source == ""{
+func Export(source string, dest string) {
+    if source == ""{
         panic("Source is not defined.")
     }
-    if Destination == ""{
+    if dest == ""{
         panic("Destination is not defined.")
     }
 

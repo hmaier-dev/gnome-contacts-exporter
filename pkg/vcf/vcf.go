@@ -1,4 +1,4 @@
-// Cannot call the package vcard because thats the name of the imported library :(
+// Cannot call this package vcard because thats the name of the imported library :(
 package vcf
 
 import (
