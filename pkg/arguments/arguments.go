@@ -1,23 +1,26 @@
 package arguments
 
 import (
-	"fmt"
-	"os"
+    "flag"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/db"
 )
 
 func Define(){
-    if len(os.Args) > 1{
-        for _, s := range os.Args[1:]{ // index 0 is the name of program, so slice it away
-            switch s {
-            case "--exporter":
-                db.Export()
-            default:
-                fmt.Printf("Argument unknown: %s \n", s)
-                os.Exit(0)
-            }
+    
+    flag.Func("from", "Sets the location from where to read the database.", func(s string) error {
+        err := db.SetSource(s)
+        if err != nil {
+            return err
         }
+        return nil
+    })
+    flag.Func("to", "Sets the location where to write the vCard-file.", func(s string) error {
+        err := db.SetDestionation(s)
+        if err != nil {
+            return err
+        }
+        return nil
+    })
 
-    }
-
+    flag.Parse()
 }

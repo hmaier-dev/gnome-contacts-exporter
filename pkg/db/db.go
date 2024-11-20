@@ -2,14 +2,12 @@ package db
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var testdb string = "testdata/contacts.db"
-var db *sql.DB
-var err error
 
 type categories struct {
 	category    string
@@ -69,9 +67,23 @@ func init() {
 	}
 }
 
+func SetSource(s string) error {
+    if s == "" {
+        return errors.New("Empty source")
+    }
+    source = s
+    return nil
+}
+func SetDestionation(s string) error {
+    if s == "" {
+        return errors.New("Empty destination")
+    }
+    destination =  s
+    return nil
+}
+
 // Export exports all vCards from the database
 func Export() {
-
 	rows := queryCommand("select vcard from folder_id;")
     recv := []folder_id{}
 	for rows.Next() {
