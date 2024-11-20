@@ -16,3 +16,4 @@
         - Welcher Ordner wird gesynct?
             - in meinem Setup `~/docs/contacts`
 
+- Testumgebung mit Earthly basteln
