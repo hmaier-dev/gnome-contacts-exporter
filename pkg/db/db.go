@@ -59,6 +59,13 @@ type keys struct {
 	folder_id string
 }
 
+var testdb string = "testdata/contacts.db"
+
+var source string
+var destination string
+var db *sql.DB
+var err error
+
 func init() {
 	source := testdb
 	db, err = sql.Open("sqlite3", source)
@@ -94,7 +101,6 @@ func Export() {
 		}
         recv = append(recv, row)
 	}
-
 }
 
 func queryCommand(q string) *sql.Rows {
