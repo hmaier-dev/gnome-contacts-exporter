@@ -7,31 +7,20 @@ import (
 	"log"
 	"os"
 	"testing"
-	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/loading"
+	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/vcard"
 )
 
-
-func TestLoadVCF(t *testing.T){
-    var path = "../testdata/contacts.vcf"
-    loading.LoadVFC(path)
-}
-
-func TestLoadSqlite(t *testing.T){
-    var path = "../testdata/contacts.db"
-    loading.LoadSqlite(path)
-    
-}
 
 
 // Files won't be identical, 
 // because go-vcard is structuring the VCARDs
 // different from gnome-contacts
-func TestWriteVCF(t *testing.T){
+func TestExport(t *testing.T){
     var path1 = "../testdata/contacts.vcf"
     var path2 = "../testdata/contacts_encoded.vcf"
-    cards := loading.LoadVFC(path1)
+    cards := vcard.Import(path1)
     var writer io.Writer = &bytes.Buffer{}
-    loading.WriteVCF(cards, writer)
+    vcard.Export(cards, writer)
     buf := writer.(*bytes.Buffer)
     data := buf.Bytes()
     os.WriteFile(path2, data, 0644)
@@ -62,9 +51,3 @@ func TestWriteVCF(t *testing.T){
 
 }
 
-func TestFromSqliteToVCF(t *testing.T){
-
-}
-func TestFromVCFToSqlit(t *testing.T){
-
-}

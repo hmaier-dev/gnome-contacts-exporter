@@ -1,16 +1,16 @@
-package loading
+// Cannot call the package vcard because thats the name of the imported library :(
+package vcf
 
 import (
 	"log"
     "os"
     "io"
     "github.com/hmaier-dev/go-vcard"
-
 )
 
 
 // LoadVFC opens a vcf-file from the given path and stores it in a Card.
-func LoadVFC(source string) []vcard.Card {
+func Import(source string) []vcard.Card {
     f, err := os.Open(source)
     if err != nil {
         log.Fatal(err)
@@ -32,7 +32,7 @@ func LoadVFC(source string) []vcard.Card {
 
 
 
-func WriteVCF(cards []vcard.Card, w io.Writer){
+func Export(cards []vcard.Card, w io.Writer){
    
     enc := vcard.NewEncoder(w)
     for _, c := range cards{
