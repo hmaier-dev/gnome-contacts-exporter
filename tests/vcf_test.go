@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 	"testing"
-	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/vcard"
+	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/vcf"
 )
 
 
@@ -18,9 +18,9 @@ import (
 func TestExport(t *testing.T){
     var path1 = "../testdata/contacts.vcf"
     var path2 = "../testdata/contacts_encoded.vcf"
-    cards := vcard.Import(path1)
+    cards := vcf.Import(path1)
     var writer io.Writer = &bytes.Buffer{}
-    vcard.Export(cards, writer)
+    vcf.Export(cards, writer)
     buf := writer.(*bytes.Buffer)
     data := buf.Bytes()
     os.WriteFile(path2, data, 0644)

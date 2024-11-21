@@ -35,8 +35,6 @@ func main(){
         fmt.Printf("Exporting from %s to %s is not supported.", args.Source, args.Destination)
     }
     
-
-    
     if args.Permit != false {
         daemon.Run()
     }
