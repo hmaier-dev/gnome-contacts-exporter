@@ -11,7 +11,7 @@ import (
 )
 
 func main(){
-    err := args.Define()
+    err := args.Define(os.Args[1:])
     if err != nil {
         for _, e := range err{
             fmt.Printf("Error: %s \n", e)

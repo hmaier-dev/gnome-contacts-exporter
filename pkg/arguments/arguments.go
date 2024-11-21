@@ -10,13 +10,13 @@ var Destination string
 var Permit bool
 
 // Sets arguments for the needed variables
-func Define() []error{
+func Define(args []string) []error{
     ret := []error{}
 
     permit := flag.Bool("daemon", false, "Runs the exporter as daemon, which listens for changes in the database.")
     source := flag.String("source", "", "Sets the location from where to read the database.")
 	destination := flag.String("destination", "", "Sets the location where to write the vCard-file.")
-    flag.Parse()
+    flag.CommandLine.Parse(args)
 
     // Checking mandatory flags
     if *source == "" {
