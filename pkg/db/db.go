@@ -57,18 +57,8 @@ type keys struct {
 	folder_id string
 }
 
-var testdb string = "testdata/contacts.db"
-
 var db *sql.DB
 var err error
-
-func init() {
-	source := testdb
-	db, err = sql.Open("sqlite3", source)
-	if err != nil {
-		log.Fatalf("%s when loading %s", err, source)
-	}
-}
 
 // Export exports all vCards from the database
 func Export(source string, dest string) {
@@ -78,6 +68,10 @@ func Export(source string, dest string) {
     if dest == ""{
         panic("Destination is not defined.")
     }
+	db, err = sql.Open("sqlite3", source)
+	if err != nil {
+		log.Fatalf("%s when loading %s", err, source)
+	}
 
 	rows := queryCommand("select vcard from folder_id;")
     recv := []folder_id{}
