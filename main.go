@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
-    "path/filepath"
+	"path/filepath"
+
 	args "github.com/hmaier-dev/gnome-contacts-exporter/pkg/arguments"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/daemon"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/db"
@@ -15,7 +16,7 @@ func main(){
     err := args.Define(os.Args[1:])
     if err != nil {
         for _, e := range err{
-            fmt.Printf("Error: %s \n", e)
+            log.Printf("Error: %s \n", e)
         }
         os.Exit(1)
     }
@@ -33,7 +34,7 @@ func main(){
         // vcf.Import -> []vcard
         // db.Export -> connect to db
     }else{
-        fmt.Printf("Exporting from %s to %s is not supported.", args.Source, args.Destination)
+        log.Fatalf("Exporting from %s to %s is not supported.", args.Source, args.Destination)
     }
     
     if args.Permit != false {
