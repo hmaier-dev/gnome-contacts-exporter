@@ -11,6 +11,7 @@ import (
 )
 
 func main(){
+    // index 0 is always the name of the program
     err := args.Define(os.Args[1:])
     if err != nil {
         for _, e := range err{
