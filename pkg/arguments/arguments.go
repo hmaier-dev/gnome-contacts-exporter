@@ -3,6 +3,7 @@ package arguments
 import (
 	"errors"
 	"flag"
+    "path/filepath"
 )
 
 var Source string
@@ -25,6 +26,10 @@ func Define(args []string) []error{
 
     if *destination == ""{
         ret = append(ret, errors.New("Destination hasn't been set."))
+    }
+
+    if *source != "" && *destination != "" && (filepath.Ext(*source) == filepath.Ext(*destination)){
+        ret = append(ret, errors.New("Cannot export into the same filetype."))
     }
 
     if len(ret) > 0{
