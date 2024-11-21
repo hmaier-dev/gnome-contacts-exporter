@@ -3,36 +3,41 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-
-	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/arguments"
+    "path/filepath"
+	args "github.com/hmaier-dev/gnome-contacts-exporter/pkg/arguments"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/daemon"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/db"
 	"github.com/hmaier-dev/gnome-contacts-exporter/pkg/vcf"
-	// "github.com/hmaier-dev/gnome-contacts-exporter/pkg/db"
 )
 
 func main(){
-    err := arguments.Define()
+    err := args.Define()
     if err != nil {
         for _, e := range err{
             fmt.Printf("Error: %s \n", e)
         }
         os.Exit(1)
     }
-    sourceExt := filepath.Ext(arguments.Source)
-    destExt := filepath.Ext(arguments.Destination)
+    sourceExt := filepath.Ext(args.Source)
+    destExt := filepath.Ext(args.Destination)
     
-    // Export from sqlite into vcf
-    if sourceExt == ".db"{
-        db.Export(arguments.Source, arguments.Destination)
-    }
-    // Import vcf into a sqlite-database
-    if destExt == ".db"{
-        vcf.Import(arguments.Source)
+    if sourceExt == ".db" && destExt == ".vcf"{
+        db.Export(args.Source, args.Destination)
+
+        // db.Import -> []vcard
+        // vcf.Export -> write to file
+    } else if sourceExt == ".vcf" && destExt == ".db"{
+        vcf.Import(args.Source)
+
+        // vcf.Import -> []vcard
+        // db.Export -> connect to db
+    }else{
+        fmt.Printf("Exporting from %s to %s is not supported.", args.Source, args.Destination)
     }
     
-    if arguments.Permit != false {
+
+    
+    if args.Permit != false {
         daemon.Run()
     }
 }
