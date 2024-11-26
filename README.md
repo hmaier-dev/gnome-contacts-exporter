@@ -1,19 +1,44 @@
-# TODO
+## gnome-contacts-exporter
 
-- Von VCF zu sqlite3
+This program is my cli to the `contacts.db` used by [gnome-contacts](https://gitlab.gnome.org/GNOME/gnome-contacts),
+which usually lies in `~/.local/share/evolution/addressbook/system/contacts.db`.
 
-- Von sqlite3 zu vcf
+My intention was to automate the exporting into a `vCard`-File (`contacts.vcf`), which can be done by hand in gnome-contacts.
 
-- Tests für verschiedene Cases schreiben
-    - 2 Emails + 1 Nummer + Kommentar + Adresse
-    - 1 Email + 2 Nummern + Kommentar + Adresse
 
-- systemd-unit generieren um script/binary zu deployen
-    - Installations-Script?
-    - Welche Dinge können sich unterscheiden pro system?
-        - Wo liegt sqlite3-Datei?
-            - bei gnome-contacts in `~/.local/share/evolution/addressbook/system/contacts.db`
-        - Welcher Ordner wird gesynct?
-            - in meinem Setup `~/docs/contacts`
 
-- Testumgebung mit Earthly basteln
+
+### Usage
+
+For exporting use the arguments:
+
+- `--source contacts.db --destination contacts.vcf`
+
+and for importing use:
+
+- `--source contacts.vcf --destination contacts.db`
+
+
+### TODO
+
+- [ ] converting from `vcf` to `sqlite3` (Import)
+
+- [ ] converting from `sqlite3` to `vcf` (Export)
+
+- [ ] implement daemon-function, which listens to `sqlite3`/`vcf` and imports/exports automatically
+
+- [ ] adding `--dry-run` for testing
+
+- [ ] add `Earthfile` for testing-environment
+
+- [ ] Write Tests for different cases
+    - [ ] 2 emails + 1 phone-numbers + comments + adress
+        - [ ] Export
+        - [ ] Import
+    - [ ] 1 email + 2 phone-numbers + comments + adress
+        - [ ] Export
+        - [ ] Import
+- [ ] Find out how to use CI to build binarys
+- [ ] build `systemd-unit` to run the exporter
+
+
